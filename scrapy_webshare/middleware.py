@@ -84,7 +84,9 @@ class WebshareMiddleware(object):
         return response
 
     def _is_enabled_for_request(self, request):
-        return self.enabled
+        allow_proxy = request.meta.get('proxy', True)
+
+        return self.enabled and allow_proxy
 
     def _create_proxy_auth(self):
         if self.user and self.password:
